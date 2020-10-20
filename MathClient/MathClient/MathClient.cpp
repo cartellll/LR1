@@ -25,66 +25,7 @@ const std::string OUT_OF_BOUNDS_MESSAGE =
 "This number is out of bounds";
 const std::string OUTPUT_MESSAGE = "Result: ";
 const std::string SKIP_CHARACTERS = " ";
-void ClearInputStream(std::istream& in)
-{
-	in.clear();
-	while (in.peek() != EOLN && in.peek() != EOF)
-	{
-		in.get();
-	}
-}
-int Seek(std::istream& in)
-{
-	while (in.peek() != EOLN &&
-		SKIP_CHARACTERS.find((char)in.peek()) !=
-		std::string::npos)
-	{
-		in.get();
-	}
-	return in.peek();
-}
-bool CheckBounds(int n)
-{
-	bool ok = (LEFT_BOUND <= n && n <=
-		RIGHT_BOUND);
-	if (!ok)
-	{
-		std::cout << OUT_OF_BOUNDS_MESSAGE << " [" << LEFT_BOUND << ", " << RIGHT_BOUND << "]" << 
-			std::endl;
-	}
-	return ok;
-}
-int ReadInt(std::istream& in)
-{
-	
-	std::cout << INPUT_MESSAGE;
-	int ans;
-	in >> ans;
-	while (!in || Seek(in) != EOLN ||
-		!CheckBounds(ans))
-	{
-		ClearInputStream(in);
-		std::cout << INCORRECT_MESSAGE;
-		in >> ans;
-	}
-	return ans;
-}
 
-
-bool NeedContinue(std::istream& in)
-{
-	std::cout << CONTINUE_MESSAGE;
-	char ans;
-	in >> ans;
-	while (!in || Seek(in) != EOLN || ans !=
-		YES_CHAR && ans != NO_CHAR)
-	{
-		ClearInputStream(in);
-		std::cout << INCORRECT_MESSAGE;
-		in >> ans;
-	}
-	return ans == YES_CHAR;
-}
 
 int ReadCorrectValue(int num) {
 	while (!(std::cin >> num) || (std::cin.peek() != '\n')) {
@@ -98,17 +39,18 @@ int ReadCorrectValue(int num) {
 int main()
 {
 	std::cout << ABOUT_MESSAGE << std::endl;
-	std::string ok = "y";
-	
+	std::string ok = "";
+
+	int x1 = 0;
+	int y1 = 0;
+	int x2 = 0;
+	int y2 = 0;
+	int x3 = 0;
+	int y3 = 0;
+
 	do
 	{
-		int x1 = 0;
-		int y1 = 0;
-		int x2 = 0; 
-		int y2 = 0;
-		int x3 = 0; 
-		int y3 = 0;
-
+		ok = "";
 		std::cout << "x1:" << std::endl;
 		x1 = ReadCorrectValue(x1);
 		
@@ -140,7 +82,7 @@ int main()
 				area << std::endl;
 		}
 		
-		while (ok != "y" || ok != "n")
+		while (ok != "y" && ok != "n")
 		{
 			std::cout << "Continue? y/n: ";
 			std::cin >> ok;
