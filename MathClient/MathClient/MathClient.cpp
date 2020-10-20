@@ -85,29 +85,47 @@ bool NeedContinue(std::istream& in)
 	}
 	return ans == YES_CHAR;
 }
+
+int ReadCorrectValue(int num) {
+	while (!(std::cin >> num) || (std::cin.peek() != '\n')) {
+		std::cin.clear();
+		while (std::cin.get() != '\n');
+		std::cout << "Input is incorrect. Try again>\n";
+	}
+	return num;
+}
+
 int main()
 {
 	std::cout << ABOUT_MESSAGE << std::endl;
-	bool cont = true;
-	while (cont)
+	std::string ok = "y";
+	
+	do
 	{
+		int x1 = 0;
+		int y1 = 0;
+		int x2 = 0; 
+		int y2 = 0;
+		int x3 = 0; 
+		int y3 = 0;
+
 		std::cout << "x1:" << std::endl;
-		int x1 = ReadInt(std::cin);
+		x1 = ReadCorrectValue(x1);
 		
 		std::cout << "y1:" << std::endl;
-		int y1 = ReadInt(std::cin);
+		y1 = ReadCorrectValue(y1);
 		
 		std::cout << "x2:" << std::endl;
-		int x2 = ReadInt(std::cin);
+		x2 = ReadCorrectValue(x2);
 
 		std::cout << "y2:" << std::endl;
-		int y2 = ReadInt(std::cin);
+		y2 = ReadCorrectValue(y2);
 
 		std::cout << "x3:" << std::endl;
-		int x3 = ReadInt(std::cin);
+		x3 = ReadCorrectValue(x3);
 
 		std::cout << "y3:" << std::endl;
-		int y3 = ReadInt(std::cin);
+		y3 = ReadCorrectValue(y3);
 
 		double area = geron(x1, y1, x2, y2, x3, y3);
 		if (area == 0)
@@ -122,7 +140,11 @@ int main()
 				area << std::endl;
 		}
 		
-		cont = NeedContinue(std::cin);
-	}
+		while (ok != "y" || ok != "n")
+		{
+			std::cout << "Continue? y/n: ";
+			std::cin >> ok;
+		}
+	} while (ok == "y");
 	return 0;
 }
